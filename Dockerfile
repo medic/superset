@@ -7,9 +7,7 @@ USER root
 # Set environment variable for Playwright
 ENV PLAYWRIGHT_BROWSERS_PATH=/usr/local/share/playwright-browsers
 
-# Install packages using uv into the virtual environment
-# Superset started using uv after the 4.1 branch; if you are building from apache/superset:4.1.x or an older version,
-# replace the first two lines with RUN pip install \
+# from https://superset.apache.org/docs/installation/docker-builds/#building-your-own-production-docker-image
 RUN . /app/.venv/bin/activate && \
     uv pip install \
     # install psycopg2 for using PostgreSQL metadata store
@@ -29,7 +27,6 @@ RUN . /app/.venv/bin/activate && \
     && playwright install-deps \
     && PLAYWRIGHT_BROWSERS_PATH=/usr/local/share/playwright-browsers playwright install chromium
 
-# Switch back to the superset user
 USER superset
 
 CMD ["/app/docker/entrypoints/run-server.sh"]
