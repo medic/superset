@@ -7,7 +7,7 @@ on:
 
 env:
   AWS_REGION: eu-west-2
-  ECR_REGISTRY: 720541322708.dkr.ecr.eu-west-2.amazonaws.com/medic
+  ECR_PUBLIC_REGISTRY: public.ecr.aws/medic
   ECR_REPOSITORY: superset
   AWS_ACCESS_KEY_ID: ${{secrets.AWS_ACCESS_KEY_ID}}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -49,6 +49,6 @@ jobs:
         context: .
         push: true
         tags: | 
-          ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:latest
-          ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${{ steps.extract_version.outputs.version }}
+          ${{ env.ECR_PUBLIC_REGISTRY }}/${{ env.ECR_REPOSITORY }}:latest
+          ${{ env.ECR_PUBLIC_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${{ steps.extract_version.outputs.version }}
           
