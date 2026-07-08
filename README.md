@@ -17,7 +17,7 @@ To use this version of superset on your deployments, update your Helm `values.ya
 ```yaml
 image:
   repository: public.ecr.aws/medic/superset
-  tag: "6.1.2"
+  tag: "6.1.0"
   pullPolicy: IfNotPresent
 ```
 
@@ -29,5 +29,5 @@ The following tags are published to [`public.ecr.aws/medic/superset`](https://ga
 | Tag | Apache Superset version |
 | --- | --- |
 | `latest` | Points to the most recently published version below |
-| `6.1.2` | 6.1.2 |
+| `6.1.0` | 6.1.0 |
 | `5.0.0` | 5.0.0 |
