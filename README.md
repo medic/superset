@@ -17,8 +17,17 @@ To use this version of superset on your deployments, update your Helm `values.ya
 ```yaml
 image:
   repository: public.ecr.aws/medic/superset
-  tag: "5.0.0"
+  tag: "6.1.2"
   pullPolicy: IfNotPresent
 ```
 
-We'll keep image tags in sync with apache superset image and this repository currently supports Apache superset `5.0.0` and onwards. 
+We keep image tags in sync with the upstream Apache Superset image. Each tag below maps to the matching `apache/superset` version.
+
+## Available Images
+The following tags are published to [`public.ecr.aws/medic/superset`](https://gallery.ecr.aws/medic/superset):
+
+| Tag | Apache Superset version |
+| --- | --- |
+| `latest` | Points to the most recently published version below |
+| `6.1.2` | 6.1.2 |
+| `5.0.0` | 5.0.0 |
