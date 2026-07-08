@@ -1,6 +1,6 @@
 # change this to apache/superset:5.0.0 or whatever version you want to build from;
 # otherwise the default is the latest commit on GitHub master branch
-FROM apache/superset:6.1.2
+FROM apache/superset:6.1.0
 
 USER root
 
