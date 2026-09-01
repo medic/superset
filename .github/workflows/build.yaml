@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - main
+  # Pull requests build both platforms but publish nothing, so a PR can prove the
+  # arm64 build works before anything reaches the registry.
+  pull_request:
 
 env:
   ECR_PUBLIC_REGISTRY: public.ecr.aws/medic
@@ -39,6 +42,7 @@ jobs:
         PLATFORM: ${{ matrix.platform }}
 
     - name: Configure AWS credentials
+      if: github.event_name != 'pull_request'
       uses: aws-actions/configure-aws-credentials@v2
       with:
         aws-access-key-id: ${{ env.AWS_ACCESS_KEY_ID }}
@@ -46,6 +50,7 @@ jobs:
         aws-region: us-east-1
 
     - name: Log in to Amazon Public ECR
+      if: github.event_name != 'pull_request'
       uses: docker/login-action@v3
       with:
         registry: public.ecr.aws
@@ -64,15 +69,17 @@ jobs:
         context: .
         platforms: ${{ matrix.platform }}
         provenance: false
-        outputs: type=image,name=${{ env.ECR_PUBLIC_REGISTRY }}/${{ env.ECR_REPOSITORY }},push-by-digest=true,name-canonical=true,push=true
+        outputs: ${{ github.event_name == 'pull_request' && 'type=cacheonly' || 'type=image,name=public.ecr.aws/medic/superset,push-by-digest=true,name-canonical=true,push=true' }}
 
     - name: Export digest
+      if: github.event_name != 'pull_request'
       run: |
         mkdir -p /tmp/digests
         digest='${{ steps.build.outputs.digest }}'
         touch "/tmp/digests/${digest#sha256:}"
 
     - name: Upload digest
+      if: github.event_name != 'pull_request'
       uses: actions/upload-artifact@v4
       with:
         name: digests-${{ env.PLATFORM_PAIR }}
@@ -84,6 +91,7 @@ jobs:
     name: Publish multi-arch manifest
     runs-on: ubuntu-latest
     needs: build
+    if: github.event_name != 'pull_request'
     timeout-minutes: 15
 
     steps:
