@@ -23,11 +23,16 @@ image:
 
 We keep image tags in sync with the upstream Apache Superset image. Each tag below maps to the matching `apache/superset` version.
 
+Images published from this repo are multi-architecture manifests covering `linux/amd64` and
+`linux/arm64`, so a single tag works on x86_64 hosts and on arm64 hosts such as AWS Graviton.
+Docker and Kubernetes pick the matching architecture automatically — no change to `values.yaml`
+is needed. Older tags built before arm64 support was added remain `amd64`-only; see the table below.
+
 ## Available Images
 The following tags are published to [`public.ecr.aws/medic/superset`](https://gallery.ecr.aws/medic/superset):
 
-| Tag | Apache Superset version |
-| --- | --- |
-| `latest` | Points to the most recently published version below |
-| `6.1.0` | 6.1.0 |
-| `5.0.0` | 5.0.0 |
+| Tag | Apache Superset version | Architectures |
+| --- | --- | --- |
+| `latest` | Points to the most recently published version below | `amd64`, `arm64` |
+| `6.1.0` | 6.1.0 | `amd64`, `arm64` |
+| `5.0.0` | 5.0.0 | `amd64` |
