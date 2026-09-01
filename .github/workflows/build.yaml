@@ -18,9 +18,13 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
+        # Both runners are pinned to the same Ubuntu version so the two halves of
+        # the manifest are built on matching hosts. There is no "ubuntu-latest-arm",
+        # so using ubuntu-latest for amd64 would drift away from the pinned arm64
+        # runner as soon as ubuntu-latest moves to a new release.
         include:
           - platform: linux/amd64
-            runner: ubuntu-latest
+            runner: ubuntu-24.04
           - platform: linux/arm64
             runner: ubuntu-24.04-arm
 
